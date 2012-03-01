@@ -1,4 +1,5 @@
 using Castle.MicroKernel.Context;
+using Castle.MicroKernel.Registration;
 
 namespace Castle.MicroKernel.Lifestyle.Contextual
 {
@@ -31,7 +32,7 @@ namespace Castle.MicroKernel.Lifestyle.Contextual
 		{
 			if (Kernel.HasComponent(typeof(IContainerContextStore)) == false)
 			{
-				Kernel.AddComponent<ContainerContextStore>(typeof(IContainerContextStore));
+				Kernel.Register(Component.For<IContainerContextStore>().ImplementedBy<ContainerContextStore>());
 			}
 		}
 

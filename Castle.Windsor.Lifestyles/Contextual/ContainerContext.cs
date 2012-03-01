@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Castle.Core;
 using Castle.Windsor;
+using Castle.MicroKernel.Registration;
 
 namespace Castle.MicroKernel.Lifestyle.Contextual
 {
@@ -28,8 +29,8 @@ namespace Castle.MicroKernel.Lifestyle.Contextual
 		public void Dispose()
 		{
 			contextStore.UnregisterCurrent(this);
-            foreach (var c in contextualComponents)
-                kernel.ReleaseComponent(c.Value);
+			foreach (var c in contextualComponents)
+				kernel.ReleaseComponent(c.Value);
 		}
 
 		public object GetInstance(string name, Type type)
@@ -48,7 +49,7 @@ namespace Castle.MicroKernel.Lifestyle.Contextual
 		{
 			if (kernel.HasComponent(typeof(IContainerContextStore)) == false)
 			{
-				kernel.AddComponent<ContainerContextStore>(typeof(IContainerContextStore));
+				kernel.Register(Component.For<IContainerContextStore>().ImplementedBy<ContainerContextStore>());
 			}
 		}
 	}
